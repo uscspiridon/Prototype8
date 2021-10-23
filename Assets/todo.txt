@@ -1,12 +1,9 @@
 TODO
 
 urgent
--player moves on a grid
--enemies move when player moves
--enemies shoot bullets that move on the grid
--hold space and move to DASH (4 squares)
--if player dashes through enemy, enemy dies
+-turn off colliders when moving?
 -if player dashes through bullet, bullet is destroyed and player stops at bullet location
+-enemy AI
 
 non-urgent
 -small UI arrows to show where bullets and enemies will move next turn

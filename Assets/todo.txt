@@ -1,9 +1,9 @@
 TODO
 
 urgent
--turn off colliders when moving?
--if player dashes through bullet, bullet is destroyed and player stops at bullet location
--enemy AI
+-add 2d grid overlay
+-add background and set sorting layers
+-enemy AI: Enemy.cs -> MakeNextMove()
 
 non-urgent
 -small UI arrows to show where bullets and enemies will move next turn

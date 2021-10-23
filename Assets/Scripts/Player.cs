@@ -91,7 +91,7 @@ public class Player : MonoBehaviour {
         }
         if (other.CompareTag("Bullet")) {
             if (dashing) {
-                discreteMovement.Stop(other.gameObject.GetComponent<DiscreteMovement>().movePoint.position);
+                discreteMovement.Stop(other.GetComponent<DiscreteMovement>().movePoint.position);
                 Destroy(other.gameObject);
             }
             else {

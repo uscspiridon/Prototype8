@@ -13,7 +13,7 @@ public class DiscreteMovement : MonoBehaviour {
 
     // lerp variables
     private bool moving;
-    private Vector3 startPos;
+    [HideInInspector] public Vector3 startPos;
     private float elapsedTime;
     
     // callback function

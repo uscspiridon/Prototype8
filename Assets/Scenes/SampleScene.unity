@@ -123,6 +123,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &270015193 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1524686796034788876, guid: fa01311062b5d42ef9ccafd9cf699a9b, type: 3}
+  m_PrefabInstance: {fileID: 1524686797038314793}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -364,6 +369,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   resetKey: 114
   quitKey: 27
+--- !u!1 &1934298617 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6941562234274817532, guid: 50e51bdd1b69c4d489da98897aa3a9e2, type: 3}
+  m_PrefabInstance: {fileID: 6941562233223285111}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1524686797038314793
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -371,6 +381,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 335260945258695189, guid: fa01311062b5d42ef9ccafd9cf699a9b, type: 3}
+      propertyPath: enemy
+      value: 
+      objectReference: {fileID: 1934298617}
+    - target: {fileID: 335260945258695189, guid: fa01311062b5d42ef9ccafd9cf699a9b, type: 3}
+      propertyPath: grids
+      value: 
+      objectReference: {fileID: 762797078}
     - target: {fileID: 1524686796034788876, guid: fa01311062b5d42ef9ccafd9cf699a9b, type: 3}
       propertyPath: m_Name
       value: Player
@@ -432,6 +450,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6941562234274817528, guid: 50e51bdd1b69c4d489da98897aa3a9e2, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 270015193}
     - target: {fileID: 6941562234274817531, guid: 50e51bdd1b69c4d489da98897aa3a9e2, type: 3}
       propertyPath: m_RootOrder
       value: 2

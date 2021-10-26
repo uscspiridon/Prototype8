@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GridManager : MonoBehaviour
 {
-    [SerializeField] private int width, height;
+    public int width, height;
     [SerializeField] private Tile tilePrefab;
     [SerializeField] private Transform cam;
 

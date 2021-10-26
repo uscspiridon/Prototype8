@@ -31,6 +31,8 @@ public class Player : MonoBehaviour {
 
     public bool playerMoved = false;
 
+    public GameObject grids;
+
     private void Awake() {
         Instance = this;
         discreteMovement = GetComponent<DiscreteMovement>();
@@ -59,51 +61,67 @@ public class Player : MonoBehaviour {
             // get player input
             if (Input.GetKeyDown(leftKey))
             {
-                if (Input.GetKey(dashKey))
+                if (transform.position.x -1 >= -0.1)
                 {
-                    dashing = true;
-                    discreteMovement.MoveLeft(dashDistance);
+                    if (Input.GetKey(dashKey))
+                    {
+                        dashing = true;
+                        discreteMovement.MoveLeft(dashDistance);
+                    }
+                    else discreteMovement.MoveLeft();
+                    onPlayerMove?.Invoke();
+                    playerMoved = true;
+                    enemy.GetComponent<Enemy>().enemyMoved = false;
                 }
-                else discreteMovement.MoveLeft();
-                onPlayerMove?.Invoke();
-                playerMoved = true;
-                enemy.GetComponent<Enemy>().enemyMoved = false;
+                
             }
             else if (Input.GetKeyDown(rightKey))
             {
-                if (Input.GetKey(dashKey))
+                if (transform.position.x +1 <= grids.GetComponent<GridManager>().width - 1)
                 {
-                    dashing = true;
-                    discreteMovement.MoveRight(dashDistance);
+                    if (Input.GetKey(dashKey))
+                    {
+                        dashing = true;
+                        discreteMovement.MoveRight(dashDistance);
+                    }
+                    else discreteMovement.MoveRight();
+                    onPlayerMove?.Invoke();
+                    playerMoved = true;
+                    enemy.GetComponent<Enemy>().enemyMoved = false;
                 }
-                else discreteMovement.MoveRight();
-                onPlayerMove?.Invoke();
-                playerMoved = true;
-                enemy.GetComponent<Enemy>().enemyMoved = false;
+                
             }
             else if (Input.GetKeyDown(upKey))
             {
-                if (Input.GetKey(dashKey))
+                if (transform.position.y +1 <= grids.GetComponent<GridManager>().height-1)
                 {
-                    dashing = true;
-                    discreteMovement.MoveUp(dashDistance);
+                    if (Input.GetKey(dashKey))
+                    {
+                        dashing = true;
+                        discreteMovement.MoveUp(dashDistance);
+                    }
+                    else discreteMovement.MoveUp();
+                    onPlayerMove?.Invoke();
+                    playerMoved = true;
+                    enemy.GetComponent<Enemy>().enemyMoved = false;
                 }
-                else discreteMovement.MoveUp();
-                onPlayerMove?.Invoke();
-                playerMoved = true;
-                enemy.GetComponent<Enemy>().enemyMoved = false;
+                
             }
             else if (Input.GetKeyDown(downKey))
             {
-                if (Input.GetKey(dashKey))
+                if (transform.position.y -1 >= -0.1)
                 {
-                    dashing = true;
-                    discreteMovement.MoveDown(dashDistance);
+                    if (Input.GetKey(dashKey))
+                    {
+                        dashing = true;
+                        discreteMovement.MoveDown(dashDistance);
+                    }
+                    else discreteMovement.MoveDown();
+                    onPlayerMove?.Invoke();
+                    playerMoved = true;
+                    enemy.GetComponent<Enemy>().enemyMoved = false;
                 }
-                else discreteMovement.MoveDown();
-                onPlayerMove?.Invoke();
-                playerMoved = true;
-                enemy.GetComponent<Enemy>().enemyMoved = false;
+                
             }
         }
         

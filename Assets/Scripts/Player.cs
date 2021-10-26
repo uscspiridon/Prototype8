@@ -15,6 +15,8 @@ public class Player : MonoBehaviour {
     public delegate void OnPlayerMove();
     public OnPlayerMove onPlayerMove;
 
+    public GameObject enemy;
+
     // public constants
     public KeyCode leftKey;
     public KeyCode rightKey;
@@ -26,6 +28,8 @@ public class Player : MonoBehaviour {
     
     // state variables
     private bool dashing;
+
+    public bool playerMoved = false;
 
     private void Awake() {
         Instance = this;
@@ -41,52 +45,79 @@ public class Player : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+
+        bool enemyMoved = enemy.GetComponent<Enemy>().enemyMoved;
+
         // set color when dashing
         if (dashing) sprite.color = dashColor;
         else sprite.color = originalColor;
         
-        // get player input
-        if (Input.GetKeyDown(leftKey)) {
-            if (Input.GetKey(dashKey)) {
-                dashing = true;
-                discreteMovement.MoveLeft(dashDistance);
+        // can only move after enemy moves
+
+        if (enemyMoved && !playerMoved)
+        {
+            // get player input
+            if (Input.GetKeyDown(leftKey))
+            {
+                if (Input.GetKey(dashKey))
+                {
+                    dashing = true;
+                    discreteMovement.MoveLeft(dashDistance);
+                }
+                else discreteMovement.MoveLeft();
+                onPlayerMove?.Invoke();
+                playerMoved = true;
+                enemy.GetComponent<Enemy>().enemyMoved = false;
             }
-            else discreteMovement.MoveLeft();
-            onPlayerMove?.Invoke();
-        }
-        else if (Input.GetKeyDown(rightKey)) {
-            if (Input.GetKey(dashKey)) {
-                dashing = true;
-                discreteMovement.MoveRight(dashDistance);
+            else if (Input.GetKeyDown(rightKey))
+            {
+                if (Input.GetKey(dashKey))
+                {
+                    dashing = true;
+                    discreteMovement.MoveRight(dashDistance);
+                }
+                else discreteMovement.MoveRight();
+                onPlayerMove?.Invoke();
+                playerMoved = true;
+                enemy.GetComponent<Enemy>().enemyMoved = false;
             }
-            else discreteMovement.MoveRight();
-            onPlayerMove?.Invoke();
-        }
-        else if (Input.GetKeyDown(upKey)) {
-            if (Input.GetKey(dashKey)) {
-                dashing = true;
-                discreteMovement.MoveUp(dashDistance);
+            else if (Input.GetKeyDown(upKey))
+            {
+                if (Input.GetKey(dashKey))
+                {
+                    dashing = true;
+                    discreteMovement.MoveUp(dashDistance);
+                }
+                else discreteMovement.MoveUp();
+                onPlayerMove?.Invoke();
+                playerMoved = true;
+                enemy.GetComponent<Enemy>().enemyMoved = false;
             }
-            else discreteMovement.MoveUp();
-            onPlayerMove?.Invoke();
-        }
-        else if (Input.GetKeyDown(downKey)) {
-            if (Input.GetKey(dashKey)) {
-                dashing = true;
-                discreteMovement.MoveDown(dashDistance);
+            else if (Input.GetKeyDown(downKey))
+            {
+                if (Input.GetKey(dashKey))
+                {
+                    dashing = true;
+                    discreteMovement.MoveDown(dashDistance);
+                }
+                else discreteMovement.MoveDown();
+                onPlayerMove?.Invoke();
+                playerMoved = true;
+                enemy.GetComponent<Enemy>().enemyMoved = false;
             }
-            else discreteMovement.MoveDown();
-            onPlayerMove?.Invoke();
         }
+        
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
         if (other.CompareTag("Enemy")) {
             if (dashing) {
-                Destroy(other.gameObject);
+                //Destroy(other.gameObject);
+                other.gameObject.SetActive(false);
             }
             else {
-                Destroy(gameObject);
+                //Destroy(gameObject);
+                gameObject.SetActive(false);
             }
         }
         if (other.CompareTag("Bullet")) {

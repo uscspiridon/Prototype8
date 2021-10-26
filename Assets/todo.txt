@@ -1,7 +1,7 @@
 TODO
 
 urgent
--add 2d grid overlay
+-add 2d grid overlay - done
 -add background and set sorting layers
 -enemy AI: Enemy.cs -> MakeNextMove()
 

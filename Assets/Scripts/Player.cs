@@ -14,9 +14,7 @@ public class Player : MonoBehaviour {
 
     public delegate void OnPlayerMove();
     public OnPlayerMove onPlayerMove;
-
-    public GameObject enemy;
-
+    
     // public constants
     public KeyCode leftKey;
     public KeyCode rightKey;
@@ -28,8 +26,6 @@ public class Player : MonoBehaviour {
     
     // state variables
     private bool dashing;
-
-    public bool playerMoved = false;
 
     public GameObject grids;
 
@@ -47,84 +43,65 @@ public class Player : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-
-        bool enemyMoved = enemy.GetComponent<Enemy>().enemyMoved;
-
         // set color when dashing
         if (dashing) sprite.color = dashColor;
         else sprite.color = originalColor;
         
-        // can only move after enemy moves
-
-        if (enemyMoved && !playerMoved)
+        // get player input
+        if (Input.GetKeyDown(leftKey) && !discreteMovement.moving)
         {
-            // get player input
-            if (Input.GetKeyDown(leftKey))
-            {
-                if (transform.position.x -1 >= -0.1)
-                {
-                    if (Input.GetKey(dashKey))
-                    {
-                        dashing = true;
-                        discreteMovement.MoveLeft(dashDistance);
-                    }
-                    else discreteMovement.MoveLeft();
-                    onPlayerMove?.Invoke();
-                    playerMoved = true;
-                    enemy.GetComponent<Enemy>().enemyMoved = false;
+            if (transform.position.x - 1 >= -0.1) {
+                if (Input.GetKey(dashKey)) {
+                    dashing = true;
+                    discreteMovement.MoveLeft(dashDistance);
                 }
-                
-            }
-            else if (Input.GetKeyDown(rightKey))
-            {
-                if (transform.position.x +1 <= grids.GetComponent<GridManager>().width - 1)
-                {
-                    if (Input.GetKey(dashKey))
-                    {
-                        dashing = true;
-                        discreteMovement.MoveRight(dashDistance);
-                    }
-                    else discreteMovement.MoveRight();
-                    onPlayerMove?.Invoke();
-                    playerMoved = true;
-                    enemy.GetComponent<Enemy>().enemyMoved = false;
-                }
-                
-            }
-            else if (Input.GetKeyDown(upKey))
-            {
-                if (transform.position.y +1 <= grids.GetComponent<GridManager>().height-1)
-                {
-                    if (Input.GetKey(dashKey))
-                    {
-                        dashing = true;
-                        discreteMovement.MoveUp(dashDistance);
-                    }
-                    else discreteMovement.MoveUp();
-                    onPlayerMove?.Invoke();
-                    playerMoved = true;
-                    enemy.GetComponent<Enemy>().enemyMoved = false;
-                }
-                
-            }
-            else if (Input.GetKeyDown(downKey))
-            {
-                if (transform.position.y -1 >= -0.1)
-                {
-                    if (Input.GetKey(dashKey))
-                    {
-                        dashing = true;
-                        discreteMovement.MoveDown(dashDistance);
-                    }
-                    else discreteMovement.MoveDown();
-                    onPlayerMove?.Invoke();
-                    playerMoved = true;
-                    enemy.GetComponent<Enemy>().enemyMoved = false;
-                }
-                
+                else discreteMovement.MoveLeft();
+
+                onPlayerMove?.Invoke();
             }
         }
-        
+        else if (Input.GetKeyDown(rightKey) && !discreteMovement.moving)
+        {
+            if (transform.position.x +1 <= grids.GetComponent<GridManager>().width - 1)
+            {
+                if (Input.GetKey(dashKey))
+                {
+                    dashing = true;
+                    discreteMovement.MoveRight(dashDistance);
+                }
+                else discreteMovement.MoveRight();
+                onPlayerMove?.Invoke();
+            }
+            
+        }
+        else if (Input.GetKeyDown(upKey) && !discreteMovement.moving)
+        {
+            if (transform.position.y +1 <= grids.GetComponent<GridManager>().height-1)
+            {
+                if (Input.GetKey(dashKey))
+                {
+                    dashing = true;
+                    discreteMovement.MoveUp(dashDistance);
+                }
+                else discreteMovement.MoveUp();
+                onPlayerMove?.Invoke();
+            }
+            
+        }
+        else if (Input.GetKeyDown(downKey) && !discreteMovement.moving)
+        {
+            if (transform.position.y -1 >= -0.1)
+            {
+                if (Input.GetKey(dashKey))
+                {
+                    dashing = true;
+                    discreteMovement.MoveDown(dashDistance);
+                }
+                else discreteMovement.MoveDown();
+                onPlayerMove?.Invoke();
+            }
+            
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other) {

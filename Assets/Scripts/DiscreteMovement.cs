@@ -12,7 +12,7 @@ public class DiscreteMovement : MonoBehaviour {
     private const float CloseEnoughToMovePoint = 0.05f;
 
     // lerp variables
-    private bool moving;
+    [HideInInspector] public bool moving;
     [HideInInspector] public Vector3 startPos;
     private float elapsedTime;
     

@@ -2,4 +2,3 @@ TODO
 
 urgent
 -add background and set sorting layers
--enemy AI: Enemy.cs -> MakeNextMove()

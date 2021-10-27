@@ -33,6 +33,7 @@ public class DiscreteMovement : MonoBehaviour {
             transform.position = Vector3.Lerp(startPos, movePoint.position, elapsedTime / MoveTime);
             if (Vector3.Distance(transform.position, movePoint.position) <= CloseEnoughToMovePoint) {
                 moving = false;
+                transform.position = movePoint.position;
                 onCompleteMovement?.Invoke();
             }
         }
@@ -53,7 +54,7 @@ public class DiscreteMovement : MonoBehaviour {
     public void Move(int x, int y, int multiplier = 1) {
         AdjustMovePoint(x * multiplier, y * multiplier);
     }
-    public void Stop(Vector3 stopPoint) {
+    public void SetNewStopPoint(Vector3 stopPoint) {
         // // x
         // int signX = (int)(transform.position.x / transform.position.x);
         // int roundedUpRawX = (int) Mathf.Ceil(Mathf.Abs(transform.position.x));
@@ -65,7 +66,7 @@ public class DiscreteMovement : MonoBehaviour {
         // // put them together
         // movePoint.position = new Vector3(roundedUpX, roundedUpY, movePoint.position.z);
         // Debug.Log("pos = (" + transform.position.x + ", " + transform.position.y + ") rounded = (" + roundedUpX + ", " + roundedUpY + ")");
-        
+        startPos = transform.position;
         movePoint.position = stopPoint;
     }
 

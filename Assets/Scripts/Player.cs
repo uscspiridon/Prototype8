@@ -39,6 +39,8 @@ public class Player : MonoBehaviour {
     void Start() {
         discreteMovement.onCompleteMovement += () => dashing = false;
         originalColor = sprite.color;
+
+        onPlayerMove += () => Debug.Log("(" + discreteMovement.movePoint.position.x + ", " + discreteMovement.movePoint.position.y + ")");
     }
 
     // Update is called once per frame
@@ -100,7 +102,6 @@ public class Player : MonoBehaviour {
                 else discreteMovement.MoveDown();
                 onPlayerMove?.Invoke();
             }
-            
         }
     }
 
@@ -117,7 +118,61 @@ public class Player : MonoBehaviour {
         }
         if (other.CompareTag("Bullet")) {
             if (dashing) {
-                discreteMovement.Stop(other.GetComponent<DiscreteMovement>().movePoint.position);
+
+                DiscreteMovement bulletMove = other.GetComponent<DiscreteMovement>();
+                Vector3 stopPoint = bulletMove.movePoint.position;
+
+                Vector2 moveDirection = discreteMovement.movePoint.position - discreteMovement.startPos;
+                Vector2 bulletMoveDirection = bulletMove.movePoint.position - bulletMove.startPos;
+                Vector2 wholePart = new Vector2((int)transform.position.x, (int)transform.position.y);
+
+                if (moveDirection.x == bulletMoveDirection.x) {
+                    if (bulletMoveDirection.y < 0) {
+                        if (transform.position.y < 0) stopPoint.y = wholePart.y - 1;
+                        else stopPoint.y = wholePart.y;
+                    }
+                    else if (bulletMoveDirection.y > 0) {
+                        if (transform.position.y > 0) stopPoint.y = wholePart.y + 1;
+                        else stopPoint.y = wholePart.y;
+                    }
+                }
+                else if (moveDirection.y == bulletMoveDirection.y) {
+                    if (bulletMoveDirection.x < 0) {
+                        if (transform.position.x < 0) stopPoint.x = wholePart.x - 1;
+                        else stopPoint.x = wholePart.x;
+                    }
+                    else if (bulletMoveDirection.x > 0) {
+                        if (transform.position.x > 0) stopPoint.x = wholePart.x + 1;
+                        else stopPoint.x = wholePart.x;
+                    }
+                }
+                else {
+                    Debug.Log("MOVING PERPENDICULAR");
+                    // find intersection of lines
+                    stopPoint = discreteMovement.movePoint.position;
+                    if (moveDirection.y < 0) {
+                        if (transform.position.y < 0) stopPoint.y = wholePart.y - 1;
+                        else stopPoint.y = wholePart.y;
+                    }
+                    else if (moveDirection.y > 0) {
+                        if (transform.position.y > 0) stopPoint.y = wholePart.y + 1;
+                        else stopPoint.y = wholePart.y;
+                    }
+                    if (moveDirection.x < 0) {
+                        if (transform.position.x < 0) stopPoint.x = wholePart.x - 1;
+                        else stopPoint.x = wholePart.x;
+                    }
+                    else if (moveDirection.x > 0) {
+                        if (transform.position.x > 0) stopPoint.x = wholePart.x + 1;
+                        else stopPoint.x = wholePart.x;
+                    }
+                }
+                
+                Debug.Log("bullet at (" + other.transform.position.x + ", " + other.transform.position.y + ")");
+                Debug.Log("at (" + transform.position.x + ", " + transform.position.y + ") and whole part is (" + wholePart.x + ", " + wholePart.y + ")");
+                Debug.Log("moving in direction (" + moveDirection.x + ", " + moveDirection.y + ")");
+                Debug.Log("stop point = (" + stopPoint.x + ", " + stopPoint.y + ")");
+                discreteMovement.SetNewStopPoint(stopPoint);
                 Destroy(other.gameObject);
             }
             else {

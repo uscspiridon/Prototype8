@@ -1,9 +1,5 @@
 TODO
 
 urgent
--add 2d grid overlay - done
 -add background and set sorting layers
 -enemy AI: Enemy.cs -> MakeNextMove()
-
-non-urgent
--small UI arrows to show where bullets and enemies will move next turn

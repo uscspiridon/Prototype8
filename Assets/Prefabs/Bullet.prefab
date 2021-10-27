@@ -129,6 +129,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movePoint: {fileID: 33336860530352069}
+  moving: 0
   startPos: {x: 0, y: 0, z: 0}
 --- !u!114 &33336861539116108
 MonoBehaviour:
@@ -143,7 +144,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   direction: {x: 0, y: 0}
-  moveDistance: 1
+  moveDistance: 2
 --- !u!61 &1856778511649674399
 BoxCollider2D:
   m_ObjectHideFlags: 0

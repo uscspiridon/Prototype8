@@ -107,12 +107,12 @@ public class Player : MonoBehaviour {
     private void OnTriggerEnter2D(Collider2D other) {
         if (other.CompareTag("Enemy")) {
             if (dashing) {
-                //Destroy(other.gameObject);
-                other.gameObject.SetActive(false);
+                Destroy(other.gameObject);
+                // other.gameObject.SetActive(false);
             }
             else {
-                //Destroy(gameObject);
-                gameObject.SetActive(false);
+                Destroy(gameObject);
+                // gameObject.SetActive(false);
             }
         }
         if (other.CompareTag("Bullet")) {

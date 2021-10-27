@@ -9,6 +9,8 @@ public class Enemy : MonoBehaviour {
 
     public GameObject bulletPrefab;
 
+    private bool shootNextTurn = false;
+
     private void Awake() {
         discreteMovement = GetComponent<DiscreteMovement>();
     }
@@ -20,7 +22,8 @@ public class Enemy : MonoBehaviour {
 
     private void MakeNextMove() {
         Vector3 playerPos = Player.Instance.transform.position;
-        
+
+        // find direction to player
         Vector3 left = new Vector3(-1, 0, 0);
         Vector3 toLeft = transform.position + left - playerPos;
         float leftLen = toLeft.magnitude;
@@ -42,27 +45,51 @@ public class Enemy : MonoBehaviour {
 
         if (mindist == leftLen)
         {
-            discreteMovement.MoveLeft();
-            Bullet bullet = Instantiate(bulletPrefab, transform.position + left, Quaternion.identity).GetComponent<Bullet>();
-            bullet.direction = new Vector2(-1, 0);
+            if (shootNextTurn) {
+                Bullet bullet = Instantiate(bulletPrefab, transform.position + left, Quaternion.identity).GetComponent<Bullet>();
+                bullet.direction = new Vector2(-1, 0);
+                shootNextTurn = false;
+            }
+            else {
+                discreteMovement.MoveLeft();
+                shootNextTurn = true;
+            }
         }
         else if (mindist == rightLen)
         {
-            discreteMovement.MoveRight();
-            Bullet bullet = Instantiate(bulletPrefab, transform.position + right, Quaternion.identity).GetComponent<Bullet>();
-            bullet.direction = new Vector2(1, 0);
+            if (shootNextTurn) {
+                Bullet bullet = Instantiate(bulletPrefab, transform.position + right, Quaternion.identity).GetComponent<Bullet>();
+                bullet.direction = new Vector2(1, 0);
+                shootNextTurn = false;
+            }
+            else {
+                discreteMovement.MoveRight();
+                shootNextTurn = true;
+            }
         }
         else if (mindist == downLen)
         {
-            discreteMovement.MoveDown();
-            Bullet bullet = Instantiate(bulletPrefab, transform.position + down, Quaternion.identity).GetComponent<Bullet>();
-            bullet.direction = new Vector2(0, -1);
+            if (shootNextTurn) {
+                Bullet bullet = Instantiate(bulletPrefab, transform.position + down, Quaternion.identity).GetComponent<Bullet>();
+                bullet.direction = new Vector2(0, -1);
+                shootNextTurn = false;
+            }
+            else {
+                discreteMovement.MoveDown();
+                shootNextTurn = true;
+            }
         }
         else if (mindist == upLen)
         {
-            discreteMovement.MoveUp();
-            Bullet bullet = Instantiate(bulletPrefab, transform.position + up, Quaternion.identity).GetComponent<Bullet>();
-            bullet.direction = new Vector2(0, 1);
+            if (shootNextTurn) {
+                Bullet bullet = Instantiate(bulletPrefab, transform.position + up, Quaternion.identity).GetComponent<Bullet>();
+                bullet.direction = new Vector2(0, 1);
+                shootNextTurn = false;
+            }
+            else {
+                discreteMovement.MoveUp();
+                shootNextTurn = true;
+            }
         }
     }
 

@@ -10,6 +10,9 @@ public class Bullet : MonoBehaviour {
     [HideInInspector] public Vector2 direction;
     public int moveDistance;
 
+    public GameObject parentenemy;
+    bool prevmove = false;
+
     private void Awake() {
         discreteMovement = GetComponent<DiscreteMovement>();
     }
@@ -23,7 +26,15 @@ public class Bullet : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        
+        if (transform.position.x > 9 || transform.position.x <0 || transform.position.y >9 || transform.position.y < 0)
+        {
+            Destroy(gameObject);
+        }
+        if (parentenemy.GetComponent<Enemy>().enemyMoved == true && !prevmove) 
+        {
+            Move();
+        }
+        prevmove = parentenemy.GetComponent<Enemy>().enemyMoved;
     }
 
     private void Move() {

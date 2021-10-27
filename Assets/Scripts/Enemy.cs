@@ -71,24 +71,28 @@ public class Enemy : MonoBehaviour {
         {
             discreteMovement.MoveLeft();
             Bullet bullet = Instantiate(bulletPrefab, transform.position + left, Quaternion.identity).GetComponent<Bullet>();
+            bullet.parentenemy = gameObject;
             bullet.direction = new Vector2(-1, 0);
         }
         else if (mindist == rightLen)
         {
             discreteMovement.MoveRight();
             Bullet bullet = Instantiate(bulletPrefab, transform.position + right, Quaternion.identity).GetComponent<Bullet>();
+            bullet.parentenemy = gameObject;
             bullet.direction = new Vector2(1, 0);
         }
         else if (mindist == downLen)
         {
             discreteMovement.MoveDown();
             Bullet bullet = Instantiate(bulletPrefab, transform.position + down, Quaternion.identity).GetComponent<Bullet>();
+            bullet.parentenemy = gameObject;
             bullet.direction = new Vector2(0, -1);
         }
         else if (mindist == upLen)
         {
             discreteMovement.MoveUp();
             Bullet bullet = Instantiate(bulletPrefab, transform.position + up, Quaternion.identity).GetComponent<Bullet>();
+            bullet.parentenemy = gameObject;
             bullet.direction = new Vector2(0, 1);
         }
     }

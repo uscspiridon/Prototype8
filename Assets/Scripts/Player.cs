@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 [RequireComponent(typeof(DiscreteMovement), typeof(SpriteRenderer))]
@@ -11,6 +12,7 @@ public class Player : MonoBehaviour {
     private DiscreteMovement discreteMovement;
     private SpriteRenderer sprite;
     private Color originalColor;
+    public TextMeshProUGUI dashCooldownText;
 
     public delegate void OnPlayerMove();
     public OnPlayerMove onPlayerMove;
@@ -22,10 +24,12 @@ public class Player : MonoBehaviour {
     public KeyCode downKey;
     public KeyCode dashKey;
     public int dashDistance = 1;
+    public int dashCooldown = 1;
     public Color dashColor;
     
     // state variables
     private bool dashing;
+    private int dashTimer;
 
     public GameObject grids;
 
@@ -49,15 +53,24 @@ public class Player : MonoBehaviour {
         if (dashing) sprite.color = dashColor;
         else sprite.color = originalColor;
         
+        // keep dash cooldown text updated
+        if (dashTimer == 0) dashCooldownText.text = "";
+        else dashCooldownText.text = dashTimer.ToString();
+
         // get player input
         if (Input.GetKeyDown(leftKey) && !discreteMovement.moving)
         {
             if (transform.position.x - 1 >= -0.1) {
-                if (Input.GetKey(dashKey)) {
+                if (Input.GetKey(dashKey) && dashTimer == 0) {
                     dashing = true;
                     discreteMovement.MoveLeft(dashDistance);
+                    dashTimer = dashCooldown;
                 }
-                else discreteMovement.MoveLeft();
+                else {
+                    discreteMovement.MoveLeft();
+                    dashTimer--;
+                    if (dashTimer < 0) dashTimer = 0;
+                }
 
                 onPlayerMove?.Invoke();
             }
@@ -66,12 +79,17 @@ public class Player : MonoBehaviour {
         {
             if (transform.position.x +1 <= grids.GetComponent<GridManager>().width - 1)
             {
-                if (Input.GetKey(dashKey))
+                if (Input.GetKey(dashKey) && dashTimer == 0)
                 {
                     dashing = true;
                     discreteMovement.MoveRight(dashDistance);
+                    dashTimer = dashCooldown;
                 }
-                else discreteMovement.MoveRight();
+                else {
+                    discreteMovement.MoveRight();
+                    dashTimer--;
+                    if (dashTimer < 0) dashTimer = 0;
+                }
                 onPlayerMove?.Invoke();
             }
             
@@ -80,12 +98,17 @@ public class Player : MonoBehaviour {
         {
             if (transform.position.y +1 <= grids.GetComponent<GridManager>().height-1)
             {
-                if (Input.GetKey(dashKey))
+                if (Input.GetKey(dashKey) && dashTimer == 0)
                 {
                     dashing = true;
                     discreteMovement.MoveUp(dashDistance);
+                    dashTimer = dashCooldown;
                 }
-                else discreteMovement.MoveUp();
+                else {
+                    discreteMovement.MoveUp();
+                    dashTimer--;
+                    if (dashTimer < 0) dashTimer = 0;
+                }
                 onPlayerMove?.Invoke();
             }
             
@@ -94,12 +117,17 @@ public class Player : MonoBehaviour {
         {
             if (transform.position.y -1 >= -0.1)
             {
-                if (Input.GetKey(dashKey))
+                if (Input.GetKey(dashKey) && dashTimer == 0)
                 {
                     dashing = true;
                     discreteMovement.MoveDown(dashDistance);
+                    dashTimer = dashCooldown;
                 }
-                else discreteMovement.MoveDown();
+                else {
+                    discreteMovement.MoveDown();
+                    dashTimer--;
+                    if (dashTimer < 0) dashTimer = 0;
+                }
                 onPlayerMove?.Invoke();
             }
         }

@@ -44,6 +44,10 @@ public class Player : MonoBehaviour {
         discreteMovement.onCompleteMovement += () => dashing = false;
         originalColor = sprite.color;
 
+        int width = grids.GetComponent<GridManager>().width;
+        int height = grids.GetComponent<GridManager>().height;
+        transform.position = new Vector3((float)width / 2, (float)height / 2, 0f);
+
         onPlayerMove += () => Debug.Log("(" + discreteMovement.movePoint.position.x + ", " + discreteMovement.movePoint.position.y + ")");
     }
 

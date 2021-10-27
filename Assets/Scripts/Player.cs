@@ -69,6 +69,8 @@ public class Player : MonoBehaviour {
                     dashing = true;
                     discreteMovement.MoveLeft(dashDistance);
                     dashTimer = dashCooldown;
+
+                    SoundManager.PlaySound("ShootSound");
                 }
                 else {
                     discreteMovement.MoveLeft();
@@ -88,6 +90,8 @@ public class Player : MonoBehaviour {
                     dashing = true;
                     discreteMovement.MoveRight(dashDistance);
                     dashTimer = dashCooldown;
+
+                    SoundManager.PlaySound("ShootSound");
                 }
                 else {
                     discreteMovement.MoveRight();
@@ -107,6 +111,8 @@ public class Player : MonoBehaviour {
                     dashing = true;
                     discreteMovement.MoveUp(dashDistance);
                     dashTimer = dashCooldown;
+
+                    SoundManager.PlaySound("ShootSound");
                 }
                 else {
                     discreteMovement.MoveUp();
@@ -126,6 +132,8 @@ public class Player : MonoBehaviour {
                     dashing = true;
                     discreteMovement.MoveDown(dashDistance);
                     dashTimer = dashCooldown;
+
+                    SoundManager.PlaySound("ShootSound");
                 }
                 else {
                     discreteMovement.MoveDown();
@@ -141,11 +149,11 @@ public class Player : MonoBehaviour {
         if (other.CompareTag("Enemy")) {
             if (dashing) {
                 Destroy(other.gameObject);
-                // other.gameObject.SetActive(false);
+                SoundManager.PlaySound("KillSound");
             }
             else {
                 Destroy(gameObject);
-                // gameObject.SetActive(false);
+                SoundManager.PlaySound("DieSound");
             }
         }
         if (other.CompareTag("Bullet")) {
@@ -206,9 +214,11 @@ public class Player : MonoBehaviour {
                 Debug.Log("stop point = (" + stopPoint.x + ", " + stopPoint.y + ")");
                 discreteMovement.SetNewStopPoint(stopPoint);
                 Destroy(other.gameObject);
+                SoundManager.PlaySound("KillSound");
             }
             else {
                 Destroy(gameObject);
+                SoundManager.PlaySound("DieSound");
             }
         }
     }
